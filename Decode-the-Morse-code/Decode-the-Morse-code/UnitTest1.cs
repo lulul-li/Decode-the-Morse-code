@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
 
@@ -30,55 +28,77 @@ namespace Decode_the_Morse_code
             var input = ".... . -.--   .--- ..- -.. .";
             Assert.AreEqual("HEY JUDE", MorseCodeDecoder.Decode(input));
         }
-    }
 
-    public class MorseCodeDecoder
-    {
-        private static Dictionary<string, string> MorseCode = new Dictionary<string, string>()
+        [Test]
+        public void MorseCodeDecoderBasicTest_6()
         {
-            { ".-","A"},
-            { "-...","B"},
-            { "-.-.","C"},
-            { "-..","D"},
-            { ".","E"},
-            { "..-.","F"},
-            { "--.","G"},
-            { "....","H"},
-            { "..","I"},
-            { ".---","J"},
-            { "-.-","K"},
-            { ".-..","L"},
-            { "--","M"},
-            { "-.","N"},
-            { "---","O"},
-            { ".--.","P"},
-            { "--.-","Q"},
-            { ".-.","R"},
-            { "...","S"},
-            { "-","T"},
-            { "..-","U"},
-            { "...-","V"},
-            { ".--","W"},
-            { "-..-","X"},
-            { "-.--","Y"},
-            { "--..","Z"}
+            try
+            {
+                string input = "...---...";
+                string expected = "SOS";
 
-        };
+                string actual = MorseCodeDecoder.Decode(input);
 
-        public static string Decode(string input)
-        {
-            var sentence = input.Split(new string[] { "   " }, StringSplitOptions.None);
-            return sentence.Aggregate("", (current, word) => current + DecodSentence(word)).TrimEnd();
+                Assert.AreEqual(expected, actual);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("There seems to be an error somewhere in your code. Exception message reads as follows: " + ex.Message);
+            }
         }
 
-        private static string DecodSentence(string word)
+        [Test]
+        public void MorseCodeDecoderComplexTest_1()
         {
-            return DecodString(word.Split(' ')) + " ";
+            try
+            {
+                string input = " . ";
+                string expected = "E";
+
+                string actual = MorseCodeDecoder.Decode(input);
+
+                Assert.AreEqual(expected, actual);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("There seems to be an error somewhere in your code. Exception message reads as follows: " + ex.Message);
+            }
         }
 
-        private static string DecodString(string[] input)
+        [Test]
+        public void MorseCodeDecoderComplexTest_2()
         {
-            return input.Aggregate("", (current, code) => current + MorseCode[code]);
+            try
+            {
+                string input = "   .   . ";
+                string expected = "E E";
+
+                string actual = MorseCodeDecoder.Decode(input);
+
+                Assert.AreEqual(expected, actual);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("There seems to be an error somewhere in your code. Exception message reads as follows: " + ex.Message);
+            }
+        }
+
+        [Test]
+        public void MorseCodeDecoderComplexTest_3()
+        {
+            try
+            {
+                string input = "      ...---... -.-.--   - .... .   --.- ..- .. -.-. -.-   -... .-. --- .-- -.   ..-. --- -..-   .--- ..- -- .--. ...   --- ...- . .-.   - .... .   .-.. .- --.. -.--   -.. --- --. .-.-.-  ";
+                string expected = "SOS! THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG.";
+
+                string actual = MorseCodeDecoder.Decode(input);
+
+                Assert.AreEqual(expected, actual);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("There seems to be an error somewhere in your code. Exception message reads as follows: " + ex.Message);
+            }
         }
     }
 }
