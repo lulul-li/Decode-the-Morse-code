@@ -42,8 +42,13 @@ namespace Decode_the_Morse_code
 
         public static string Decode(string input)
         {
-            var word = SplitToWordFrom(input);
-            return word.Aggregate("", (current, c) => current + DecodWord(c.Trim())).TrimEnd();
+            var words = SplitToWordFrom(input);
+            var result = "";
+            foreach (var word in words)
+            {
+                result = result + DecodWord(word.Trim());
+            }
+            return result.TrimEnd();
         }
 
         private static string[] SplitToWordFrom(string input)
